@@ -30,11 +30,11 @@ public class FileStorageService implements FileStorage {
             if(file.isEmpty()) {
                 throw new StorageException("failed to store empty file");
             }
-            System.out.println("filename: " + file.getOriginalFilename());
-            System.out.println("root location: " + rootLocation.toString());
-            System.out.println("resolving rootlocation path with filename: " + rootLocation.resolve(Paths.get(file.getOriginalFilename())));
-            System.out.println("normilizing resolve: " + rootLocation.resolve(file.getOriginalFilename()).normalize());
-            System.out.println("using toAbsolutePath: " + rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath());
+            //System.out.println("filename: " + file.getOriginalFilename());
+            //System.out.println("root location: " + rootLocation.toString());
+            //System.out.println("resolving rootlocation path with filename: " + rootLocation.resolve(Paths.get(file.getOriginalFilename())));
+            //System.out.println("normilizing resolve: " + rootLocation.resolve(file.getOriginalFilename()).normalize());
+            //System.out.println("using toAbsolutePath: " + rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath());
             Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath();
             if (!
             destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {

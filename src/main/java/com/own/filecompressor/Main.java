@@ -1,10 +1,12 @@
 package com.own.filecompressor;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
@@ -19,11 +21,14 @@ import com.own.filecompressor.backend.service.StorageProperties;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableConfigurationProperties(StorageProperties.class)
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(Main.class, args);
 
-        StorageProperties props = new StorageProperties();
-        FileStorageService file = new FileStorageService(props);
+    private static FileStorageService file;
+
+    public Main(FileStorageService file) {
+        this.file = file;
+    }
+    public static void main(String[] args) throws InterruptedException {
+        ApplicationContext context = SpringApplication.run(Main.class, args);
         file.init();
 
         String connectStr = System.getenv("AZURE_STORAGE_CONNECTION_STRING");
@@ -47,12 +52,13 @@ public class Main {
             blobContainerClient = blobServiceClient.getBlobContainerClient(containerName);
         }
 
-        String fileName = "cat.jpg";
+
+        /*String fileName = "cat.jpg";
         String localPath = "C:\\Users\\user\\Desktop\\";
     
-        BlobClient blobClient = blobContainerClient.getBlobClient(fileName);
+        BlobClient blobClient = blobContainerClient.getBlobClient(fileName);*/
 
-        System.out.println("\nUploading to Blob storage as blob:\n\t" + blobClient.getBlobUrl());
+        /*System.out.println("\nUploading to Blob storage as blob:\n\t" + blobClient.getBlobUrl());
 
         // Upload the blob
         try {
@@ -60,7 +66,7 @@ public class Main {
             System.out.println("Upload from file succeeded");
         } catch (UncheckedIOException ex) {
             System.err.printf("Failed to upload from file %s%n", ex.getMessage());
-        }
+        }*/
 
         System.out.println("\nListing blobs...");
 
