@@ -1,4 +1,4 @@
-package com.own.filecompressor.backend.service;
+package com.own.filemanager.backend.service;
 
 import java.io.IOException;
 import java.io.InputStream;

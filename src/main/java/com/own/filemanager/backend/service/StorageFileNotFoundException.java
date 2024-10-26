@@ -1,4 +1,4 @@
-package com.own.filecompressor.backend.service;
+package com.own.filemanager.backend.service;
 
 public class StorageFileNotFoundException extends StorageException {
     public StorageFileNotFoundException(String message) {

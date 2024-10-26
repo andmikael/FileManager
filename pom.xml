@@ -8,9 +8,9 @@
         <!--  lookup parent from repository  -->
     </parent>
     <groupId>com.own</groupId>
-    <artifactId>filecompressor</artifactId>
+    <artifactId>filemanager</artifactId>
     <version>0.0.1</version>
-    <name>filecompressor</name>
+    <name>filemanager</name>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -62,7 +62,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>filecompressor</finalName>
+        <finalName>filemanager</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

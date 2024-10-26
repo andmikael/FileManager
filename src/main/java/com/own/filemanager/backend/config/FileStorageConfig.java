@@ -1,14 +1,15 @@
-package com.own.filecompressor.backend.config;
+package com.own.filemanager.backend.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import com.own.filecompressor.backend.service.FileStorageService;
-import com.own.filecompressor.backend.service.StorageProperties;
+import com.own.filemanager.backend.service.FileStorageService;
+import com.own.filemanager.backend.service.StorageProperties;
 
 @Configuration
+@EnableConfigurationProperties(StorageProperties.class)
 public class FileStorageConfig {
     
     @Bean
