@@ -1,16 +1,25 @@
 <html xmlns:th="https://www.thymeleaf.org">
+<link th:href = "@{/css/container.css}" rel="stylesheet">
+<header></header>
 <body>
-
-	<div th:if="${message}">
-		<h2 th:text="${message}">
+	<div class="form-container">
+		<h2 id = "welcome">Select an existing container</h2>
+		<form id ="container-selector" method="POST" enctype="text/plain" th:action="@{/}">
+			<div>
+				<select id = "dropdown" name="selected-container">
+					<option th:each="cont:${containers}" th:text="${cont}" th:value="${cont}"></option>
+				</select>
+				<input id="select-button" type="submit" value="Select container" />
+			</div>
+		</form>
+		<h2 id="create-message">Or create a new one</h2>
+		<form id ="container-creator" method="POST" enctype="text/plain" th:action="@{/}">
+			<div>
+				<input type="text" id="cont-name" name="container-name"><br>
+				<input id="create-button" type="submit" value="Create container" />
+			</div>
+		</form>
 	</div>
-	<form method="POST" th:action="@{/}">
-		<div>
-			<select name="selected-container">
-				<option th:each="cont:${containers}" th:text="${cont}" th:value="${cont}"></option>
-			</select>
-			<input type="submit" value="Select container" />
-		</div>
-	</form>
 </body>
+<footer></footer>
 </html>
