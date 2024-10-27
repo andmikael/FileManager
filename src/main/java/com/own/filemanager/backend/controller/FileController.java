@@ -32,8 +32,7 @@ public class FileController {
 
     @GetMapping("/index")
     public String switchControllers(Model model){
-        System.out.println(this.blobStorage.getContainerName());
-        return "container";
+        return "index";
     }
 
     @PostMapping("/index")

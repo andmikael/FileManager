@@ -22,6 +22,6 @@ public class BlobProperties {
     }
 
     public void setUrlPrefix() {
-        this.urlPrefix = System.getenv("AZURE_STORAGE_URL_PREFIX");
+        this.urlPrefix = System.getenv("AZURE_STORAGE_URL_ENDPOINT");
     }
 }

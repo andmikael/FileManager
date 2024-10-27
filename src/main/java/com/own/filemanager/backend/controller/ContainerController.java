@@ -42,9 +42,8 @@ public class ContainerController {
     }
 
     @PostMapping("/")
-    public String selectContainer(@RequestParam("selected-container") String containerName,
-    RedirectAttributes redirectAttributes) {
-        System.out.println(containerName);
+    public String handleContainerSelection(@RequestParam(name="selected-container")  String containerName,
+    Model model) {
         blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
         return "redirect:/index";
     }
