@@ -2,13 +2,21 @@
 	<link th:href = "@{/css/html.css}" rel="stylesheet">
 <body>
 	<div class ="upload-container">
-		<h2 th:text="|Currently selected container: ${container}|"></h2>
 		<h2>Choose a file to upload</h2>
-		<form method="POST" enctype="multipart/form-data" action="/index">
-			<input type="file" name="file" />
-			<input type="submit" value="Upload" />
-			<table>
+		<form id = "image-uploader" method="POST" enctype="multipart/form-data" action="/index">
+      <div id="file-selection">
+        <label for="file-button" id="file-label"></label>
+        <input id="file-button" type="file" name="file"/>
+        <label for="upload-button" id="upload-label"></label>
+        <input id="upload-button" type="submit" value="Upload" />
+
+
+      </div>
 		</form>
+		<h2 th:text="|${container}:|"></h2>
+    <ul id="bloblist">
+      <li th:each="blob:${blobs}" th:text="${blob.getName()}" th:value="${blob.getName()}"></li>
+    </ul>
 	</div>
 </body>
 </html>

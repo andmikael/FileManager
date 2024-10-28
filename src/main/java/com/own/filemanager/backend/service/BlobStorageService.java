@@ -7,13 +7,15 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.models.BlobContainerItem;
+import com.azure.storage.blob.models.BlobItem;
 
 public class BlobStorageService implements BlobStorage {
-    private PagedIterable<BlobContainerItem> listOfBlobs;
+    private PagedIterable<BlobContainerItem> listOfBlobContainers;
     private String connectionString = null;
     private String urlPrefix = null;
     private BlobServiceClient client = null;
     private BlobContainerClient containerClient = null;
+    private PagedIterable<BlobItem> listOfBlobs;
 
     @Autowired
     public BlobStorageService(BlobProperties properties) {
@@ -30,17 +32,17 @@ public class BlobStorageService implements BlobStorage {
         .connectionString(this.connectionString)
         .buildClient();
 
-        listOfBlobs = this.fetchBlobs();
+        listOfBlobContainers = this.fetchBlobContainers();
     }
 
     @Override
-    public PagedIterable<BlobContainerItem> fetchBlobs() {
+    public PagedIterable<BlobContainerItem> fetchBlobContainers() {
         return client.listBlobContainers();
     }
 
     @Override
-    public PagedIterable<BlobContainerItem> getBlobs() {
-        return this.listOfBlobs;
+    public PagedIterable<BlobContainerItem> getBlobContainers() {
+        return this.listOfBlobContainers;
     }
 
     @Override
@@ -66,5 +68,10 @@ public class BlobStorageService implements BlobStorage {
     @Override
     public BlobContainerClient getCurrentContainerClient() {
         return this.containerClient;
+    }
+
+    @Override
+    public PagedIterable<BlobItem> getBlobs() {
+        return this.containerClient.listBlobs();
     }
 }

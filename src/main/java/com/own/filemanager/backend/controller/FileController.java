@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.azure.core.http.rest.PagedIterable;
+import com.azure.storage.blob.models.BlobItem;
 import com.own.filemanager.backend.service.BlobStorage;
 import com.own.filemanager.backend.service.FileStorage;
 import com.own.filemanager.backend.service.StorageFileNotFoundException;
@@ -23,6 +25,7 @@ public class FileController {
 
     private final FileStorage fileStorage;
     private final BlobStorage blobStorage;
+    private PagedIterable<BlobItem> listOfBlobs;
     
     @Autowired
     public FileController(FileStorage fileStorage, BlobStorage blobStorage) {
@@ -36,6 +39,8 @@ public class FileController {
             return "redirect:/";
         }
         model.addAttribute("container", blobStorage.getCurrentContainerClient().getBlobContainerName());
+        this.listOfBlobs = blobStorage.getBlobs();
+        model.addAttribute("blobs", listOfBlobs);
         return "index";
     }
 

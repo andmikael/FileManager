@@ -32,7 +32,7 @@ public class ContainerController {
     public String populateDropDown(Model model){
         
         List<String> blobs = new ArrayList<>();
-        PagedIterable<BlobContainerItem> foundBlobs = blobStorage.getBlobs();
+        PagedIterable<BlobContainerItem> foundBlobs = blobStorage.getBlobContainers();
         for (BlobContainerItem elem : foundBlobs) {
             blobs.add(elem.getName());
         model.addAttribute("containers", blobs);
