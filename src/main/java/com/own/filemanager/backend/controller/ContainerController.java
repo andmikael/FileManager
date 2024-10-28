@@ -46,6 +46,10 @@ public class ContainerController {
         blobStorage.createContainer(containerName);
         return "redirect:/index";
     }
+
+    /*
+     * TODO: add ability to delete a container
+     */
     
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?>

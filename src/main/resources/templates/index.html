@@ -1,12 +1,13 @@
 <html xmlns:th="https://www.thymeleaf.org">
-<link th:href = "@{/css/html.css}">
+	<link th:href = "@{/css/html.css}" rel="stylesheet">
 <body>
-	<div>
+	<div class ="upload-container">
+		<h2 th:text="|Currently selected container: ${container}|"></h2>
+		<h2>Choose a file to upload</h2>
 		<form method="POST" enctype="multipart/form-data" action="/index">
+			<input type="file" name="file" />
+			<input type="submit" value="Upload" />
 			<table>
-				<tr><td>File to upload:</td><td><input type="file" name="file" /></td>
-				<td></td><td><input type="submit" value="Upload" /></td></tr>
-			</table>
 		</form>
 	</div>
 </body>

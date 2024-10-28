@@ -62,4 +62,9 @@ public class BlobStorageService implements BlobStorage {
     public void createContainer(String containerName) {
         this.containerClient = client.createBlobContainerIfNotExists(containerName);
     }
+
+    @Override
+    public BlobContainerClient getCurrentContainerClient() {
+        return this.containerClient;
+    }
 }

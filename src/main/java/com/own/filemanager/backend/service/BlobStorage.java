@@ -12,4 +12,5 @@ public interface BlobStorage {
     void setContainerClient(BlobContainerClient containerClient);
     String getContainerName();
     void createContainer(String containerName);
+    BlobContainerClient getCurrentContainerClient();
 }

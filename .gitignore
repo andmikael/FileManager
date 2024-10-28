@@ -1,3 +1,4 @@
 target/
 vendor/
 upload-dir/
+.vscode

@@ -32,6 +32,10 @@ public class FileController {
 
     @GetMapping("/index")
     public String switchControllers(Model model){
+        if (blobStorage.getCurrentContainerClient() == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("container", blobStorage.getCurrentContainerClient().getBlobContainerName());
         return "index";
     }
 
@@ -44,6 +48,10 @@ public class FileController {
 
         return "redirect:/index";
     }
+
+    /*
+     * TODO: add ability to rename files before upload
+     */
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?>
