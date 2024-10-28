@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.models.BlobContainerItem;
@@ -40,10 +40,10 @@ public class ContainerController {
         return "container";
     }
 
-    @PostMapping("/")
-    public String handleContainerSelection(@RequestParam(name="selected-container")  String containerName,
-    Model model) {
-        blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
+    @PostMapping(value="/")
+    public String handleContainerSelection(@RequestBody String containerName, Model model) {
+        containerName = containerName.substring(15, containerName.indexOf("\n")-1);
+        blobStorage.createContainer(containerName);
         return "redirect:/index";
     }
     
@@ -52,6 +52,5 @@ public class ContainerController {
     handleStorageFileNotFound(StorageFileNotFoundException exc) {
         return ResponseEntity.notFound().build();
     }
-
 
 }

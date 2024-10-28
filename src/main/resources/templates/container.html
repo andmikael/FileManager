@@ -6,17 +6,17 @@
 		<h2 id = "welcome">Select an existing container</h2>
 		<form id ="container-selector" method="POST" enctype="text/plain" th:action="@{/}">
 			<div>
-				<select id = "dropdown" name="selected-container">
+				<select id = "dropdown" name="container-name">
 					<option th:each="cont:${containers}" th:text="${cont}" th:value="${cont}"></option>
 				</select>
-				<input id="select-button" type="submit" value="Select container" />
+				<input id="select-button" name="select-button" type="submit" value="Select container" />
 			</div>
-		</form>
-		<h2 id="create-message">Or create a new one</h2>
+		</form>	
+		<h2 id="create-message">Or create a new one if one doesn't exist</h2>
 		<form id ="container-creator" method="POST" enctype="text/plain" th:action="@{/}">
 			<div>
 				<input type="text" id="cont-name" name="container-name"><br>
-				<input id="create-button" type="submit" value="Create container" />
+				<input id="create-button" name="create-button" type="submit" value="Create container" />
 			</div>
 		</form>
 	</div>
