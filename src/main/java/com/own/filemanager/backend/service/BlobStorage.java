@@ -15,4 +15,5 @@ public interface BlobStorage {
     void createContainer(String containerName);
     BlobContainerClient getCurrentContainerClient();
     PagedIterable<BlobItem> getBlobs();
+    Boolean deleteContainer();
 }

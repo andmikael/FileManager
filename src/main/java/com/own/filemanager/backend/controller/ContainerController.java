@@ -40,16 +40,34 @@ public class ContainerController {
         return "container";
     }
 
-    @PostMapping(value="/")
-    public String handleContainerSelection(@RequestBody String containerName, Model model) {
-        containerName = containerName.substring(15, containerName.indexOf("\n")-1);
-        blobStorage.createContainer(containerName);
+    @PostMapping(value="/selectContainer")
+    public String handleContainerSelection(@RequestBody String postBody, Model model) {
+        String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
+        String method = postBody.substring(postBody.indexOf("\n"), postBody.indexOf("=", postBody.indexOf("\n")));
+        method = method.trim().toLowerCase();
+        System.out.println(method);
+        if (method.equals("delete-button")) {
+            blobStorage.createContainer(containerName);
+            blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
+            if (blobStorage.deleteContainer()) {
+                System.out.println("deletion successful");
+                return "redirect:/";
+            } else {
+                System.out.println("deletion unsuccessful");
+                return "redirect:/Error";
+            }
+        }
+
+        blobStorage.createContainer(containerName); // createContainer method returns a handle to an existing container if it already exists
         return "redirect:/index";
     }
 
-    /*
-     * TODO: add ability to delete a container
-     */
+    @PostMapping(value="/createContainer")
+    public String handleContainerCreation(@RequestBody String postBody, Model model) {
+        String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
+        blobStorage.createContainer(containerName);
+        return "redirect:/index";
+    }
     
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?>

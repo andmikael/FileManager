@@ -74,4 +74,9 @@ public class BlobStorageService implements BlobStorage {
     public PagedIterable<BlobItem> getBlobs() {
         return this.containerClient.listBlobs();
     }
+
+    @Override
+    public Boolean deleteContainer() {
+        return containerClient.deleteIfExists();
+    }
 }
