@@ -8,7 +8,7 @@ on:
       [ main ]
     paths:
     - '**'
-    - '.github/workflows/filemanager-AutoDeployTrigger-3f6f35df-7a1f-496b-80c9-0b6ad13353f8.yml'
+    - '.github/workflows/filemanager-AutoDeployTrigger-1ddf993a-f1b8-450e-a145-eda3b1cb6279.yml'
 
   # Allow manual trigger 
   workflow_dispatch:      
