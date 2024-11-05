@@ -3,21 +3,28 @@
 <header></header>
 <body>
 	<div class="form-container">
-		<h2 id = "welcome">Select an existing container</h2>
+		<h2 id = "welcome">Manage an existing container</h2>
 		<form id ="container-selector" method="POST" enctype="text/plain" th:action="@{/selectContainer}">
 			<div>
 				<select id = "dropdown" name="container-name">
 					<option th:each="cont:${containers}" th:text="${cont}" th:value="${cont}"></option>
 				</select>
-				<input id="select-button" name="select-button" type="submit" value="Select container"/>
-				<input id="delete-button" name="delete-button" type="submit" value="Delete container"/>
+				<br><br>
+				<button type="submit" id="select-button" name="select-button">
+					Select container
+				</button>
+				<button type="submit" id="delete-button" name="delete-button">
+					Delete container
+				</button>
 			</div>
 		</form>	
-		<h2 id="create-message">Or create a new one if it doesn't exist already</h2>
+		<h2 id="create-message">Or create a new one</h2>
 		<form id ="container-creator" method="POST" enctype="text/plain" th:action="@{/createContainer}">
 			<div>
 				<input type="text" id="cont-name" name="container-name"><br>
-				<input id="create-button" name="create-button" type="submit" value="Create container" />
+				<button type="submit" id="create-button" name="create-button">
+					Create container
+				</button>
 			</div>
 		</form>
 	</div>
