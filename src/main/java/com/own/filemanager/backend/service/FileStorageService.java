@@ -18,9 +18,9 @@ public class FileStorageService implements FileStorage {
 
     @Autowired
     public FileStorageService(StorageProperties properties) {
-        if (properties.getLocation().trim().length() == 0) {
-            throw new StorageException("File upload location can not be empty");
-        }
+        //if (properties.getLocation().trim().length() == 0) {
+        //    throw new StorageException("File upload location can not be empty");
+        //}
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
@@ -36,11 +36,12 @@ public class FileStorageService implements FileStorage {
             //System.out.println("normilizing resolve: " + rootLocation.resolve(file.getOriginalFilename()).normalize());
             //System.out.println("using toAbsolutePath: " + rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath());
             Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath();
-            if (!
+            System.out.println(destinationFile);
+            /*if (!
             destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new StorageException(
                     "Cannot store file outside current directory");
-            } try (InputStream inputStream = file.getInputStream()) {
+            }*/ try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile,
                 StandardCopyOption.REPLACE_EXISTING);
             }

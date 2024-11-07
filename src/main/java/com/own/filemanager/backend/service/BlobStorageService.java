@@ -1,8 +1,13 @@
 package com.own.filemanager.backend.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.azure.core.http.rest.PagedIterable;
+import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
@@ -78,5 +83,17 @@ public class BlobStorageService implements BlobStorage {
     @Override
     public Boolean deleteContainer() {
         return containerClient.deleteIfExists();
+    }
+
+    @Override
+    public Boolean uploadFile(MultipartFile file, String filename) {
+        BlobClient blobClient  = this.containerClient.getBlobClient(filename);
+        InputStream fileStream = null;
+        try {
+            fileStream = file.getInputStream();
+        } catch (IOException ex) {
+        }
+        blobClient.upload(fileStream);
+        return true;
     }
 }

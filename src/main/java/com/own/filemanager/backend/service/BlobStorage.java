@@ -1,5 +1,7 @@
 package com.own.filemanager.backend.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.models.BlobContainerItem;
@@ -16,4 +18,5 @@ public interface BlobStorage {
     BlobContainerClient getCurrentContainerClient();
     PagedIterable<BlobItem> getBlobs();
     Boolean deleteContainer();
+    Boolean uploadFile(MultipartFile file, String filename);
 }

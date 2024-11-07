@@ -3,12 +3,15 @@
 <body>
 	<div class ="upload-container">
 		<h2>Choose a file to upload</h2>
-		<form id = "image-uploader" method="POST" enctype="multipart/form-data" action="/index">
+		<form id = "image-uploader" method="POST" enctype="multipart/form-data" th:action="@{/uploadFile}">
       <div id="file-selection">
         <label for="file-button" id="file-label"></label>
         <input id="file-button" type="file" name="file"/>
-        <label for="upload-button" id="upload-label"></label>
-        <input id="upload-button" type="submit" value="Upload" />
+		<button type="submit" id="upload-button" name="upload-button">
+			Upload file
+		</button>
+        <!--<label for="upload-button" id="upload-label"></label>
+        <input id="upload-button" type="submit" value="Upload" />-->
 
 
       </div>

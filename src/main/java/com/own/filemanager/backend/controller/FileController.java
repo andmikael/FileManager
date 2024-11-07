@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.models.BlobItem;
@@ -40,17 +39,13 @@ public class FileController {
         }
         model.addAttribute("container", blobStorage.getCurrentContainerClient().getBlobContainerName());
         this.listOfBlobs = blobStorage.getBlobs();
-        model.addAttribute("blobs", listOfBlobs);
+        model.addAttribute("blobs", this.listOfBlobs);
         return "index";
     }
 
-    @PostMapping("/index")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-    RedirectAttributes redirectAttributes) {
-        fileStorage.store(file);
-        redirectAttributes.addFlashAttribute("message", "uploaded " 
-        + file.getOriginalFilename());
-
+    @PostMapping(value="/uploadFile")
+    public String handleFileUpload(@RequestBody MultipartFile file, Model model) {
+        blobStorage.uploadFile(file, file.getOriginalFilename());   
         return "redirect:/index";
     }
 
