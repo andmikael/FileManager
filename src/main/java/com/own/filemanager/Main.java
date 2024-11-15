@@ -24,7 +24,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         ApplicationContext context = SpringApplication.run(Main.class, args);
         file.init();
-        blobService.init();
+        //blobService.init();
 
         // Grab azure key from env variable
 //        String connectStr = System.getenv("AZURE_STORAGE_CONNECTION_STRING");
