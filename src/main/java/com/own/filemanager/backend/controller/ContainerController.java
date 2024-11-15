@@ -28,9 +28,9 @@ public class ContainerController {
         this.blobStorage = blobStorage;
     }
 
-    @GetMapping("/")
+    @GetMapping("/container")
     public String populateDropDown(Model model){
-        
+        this.blobStorage.init();
         List<String> blobs = new ArrayList<>();
         PagedIterable<BlobContainerItem> foundBlobs = blobStorage.getBlobContainers();
         for (BlobContainerItem elem : foundBlobs) {

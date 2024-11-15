@@ -9,6 +9,7 @@ import com.azure.storage.blob.models.BlobItem;
 
 public interface BlobStorage {
     void init();
+    public void setConnString(String connString);
     PagedIterable<BlobContainerItem> fetchBlobContainers();
     PagedIterable<BlobContainerItem> getBlobContainers();
     BlobContainerClient getContainerClient(String containerName);

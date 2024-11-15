@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     @RequestMapping("")
-    public String blob() {
-        return "container";
+    public String login() {
+        return "login";
     }
 
     @RequestMapping("index")
     public String storage() {
         return "index";
+    }
+
+    @RequestMapping("container")
+    public String container() {
+        return "container";
     }
 }

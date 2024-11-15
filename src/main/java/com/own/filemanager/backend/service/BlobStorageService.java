@@ -24,10 +24,15 @@ public class BlobStorageService implements BlobStorage {
 
     @Autowired
     public BlobStorageService(BlobProperties properties) {
-        properties.setConnectionStr();
+        //properties.setConnectionStr(connString);
         this.connectionString = properties.getConnectionStr();
         properties.setUrlPrefix();
         this.urlPrefix = properties.getUrlPrefix();
+    }
+
+    @Override
+    public void setConnString(String connString) {
+        this.connectionString = connString;
     }
 
     @Override 
