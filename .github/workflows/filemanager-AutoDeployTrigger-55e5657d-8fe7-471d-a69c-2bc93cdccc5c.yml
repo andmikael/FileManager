@@ -8,7 +8,7 @@ on:
       [ main ]
     paths:
     - '**'
-    - '.github/workflows/filemanager-AutoDeployTrigger-1ddf993a-f1b8-450e-a145-eda3b1cb6279.yml'
+    - '.github/workflows/filemanager-AutoDeployTrigger-55e5657d-8fe7-471d-a69c-2bc93cdccc5c.yml'
 
   # Allow manual trigger 
   workflow_dispatch:      
@@ -36,12 +36,12 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
-          registryUrl: 
+          registryUrl: filemanagerregister.azurecr.io
           registryUsername: ${{ secrets.FILEMANAGER_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.FILEMANAGER_REGISTRY_PASSWORD }}
           containerAppName: filemanager
           resourceGroup: spring-filemanager
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          imageToBuild: filemanagerregister.azurecr.io/filemanager:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 
