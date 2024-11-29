@@ -2,6 +2,9 @@
 	<link th:href = "@{/css/html.css}" rel="stylesheet">
 <body>
 	<div class ="upload-container">
+		<div id="error-text" th:if="${message}">
+			<h2 th:text="${message}">
+		</div>
 		<h2>Choose a file to upload</h2>
 		<form id = "image-uploader" method="POST" enctype="multipart/form-data" th:action="@{/uploadFile}">
       <div id="file-selection">

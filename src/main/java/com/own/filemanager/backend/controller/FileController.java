@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.models.BlobItem;
@@ -33,7 +34,7 @@ public class FileController {
     }
 
     @GetMapping("/index")
-    public String switchControllers(Model model){
+    public String switchControllers(Model model, RedirectAttributes redirectAttribs){
         if (blobStorage.getCurrentContainerClient() == null) {
             return "redirect:/";
         }
@@ -44,9 +45,18 @@ public class FileController {
     }
 
     @PostMapping(value="/uploadFile")
-    public String handleFileUpload(@RequestBody MultipartFile file, Model model) {
-        blobStorage.uploadFile(file, file.getOriginalFilename());   
-        return "redirect:/index";
+    public String handleFileUpload(@RequestBody MultipartFile file, Model model, RedirectAttributes redirectAttribs) {
+        String result = blobStorage.uploadFile(file, file.getOriginalFilename());
+        switch (result) {
+            case "error":
+                redirectAttribs.addFlashAttribute("message", "Encountered error while uploading");
+                return "redirect:/index";
+            case "too-large":
+                redirectAttribs.addFlashAttribute("message", "Filesize too large!");
+                return "redirect:/index";
+            default:
+                return "redirect:/index";
+        }
     }
 
     /*

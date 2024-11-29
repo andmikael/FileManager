@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.models.BlobContainerItem;
@@ -29,8 +30,11 @@ public class ContainerController {
     }
 
     @GetMapping("/container")
-    public String populateDropDown(Model model){
-        this.blobStorage.init();
+    public String populateDropDown(Model model, RedirectAttributes redirectAttrs){
+        if (!this.blobStorage.init()) {
+            redirectAttrs.addFlashAttribute("message", "Wrong connection string!");
+            return "redirect:/";
+        }
         List<String> blobs = new ArrayList<>();
         PagedIterable<BlobContainerItem> foundBlobs = blobStorage.getBlobContainers();
         for (BlobContainerItem elem : foundBlobs) {
@@ -41,7 +45,7 @@ public class ContainerController {
     }
 
     @PostMapping(value="/selectContainer")
-    public String handleContainerSelection(@RequestBody String postBody, Model model) {
+    public String handleContainerSelection(@RequestBody String postBody, Model model, RedirectAttributes redirectAttribs) {
         String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
         String method = postBody.substring(postBody.indexOf("\n"), postBody.indexOf("=", postBody.indexOf("\n")));
         method = method.trim().toLowerCase();
@@ -50,8 +54,9 @@ public class ContainerController {
             blobStorage.createContainer(containerName);
             blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
             if (blobStorage.deleteContainer()) {
+                redirectAttribs.addFlashAttribute("message", "Container deleted");
                 System.out.println("deletion successful");
-                return "redirect:/";
+                return "redirect:/container";
             } else {
                 System.out.println("deletion unsuccessful");
                 return "redirect:/Error";

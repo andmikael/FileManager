@@ -33,16 +33,22 @@ public class BlobStorageService implements BlobStorage {
     @Override
     public void setConnString(String connString) {
         this.connectionString = connString;
-    }
+
+    }   
 
     @Override 
-    public void init() {
-        this.client = new BlobServiceClientBuilder()
-        .endpoint(this.urlPrefix)
-        .connectionString(this.connectionString)
-        .buildClient();
+    public Boolean init() {
+        try {
+            this.client = new BlobServiceClientBuilder()
+            .endpoint(this.urlPrefix)
+            .connectionString(this.connectionString)
+            .buildClient();
+        } catch(java.lang.IllegalArgumentException e) {
+            return false;
+        }
 
         listOfBlobContainers = this.fetchBlobContainers();
+        return true;
     }
 
     @Override
@@ -91,14 +97,18 @@ public class BlobStorageService implements BlobStorage {
     }
 
     @Override
-    public Boolean uploadFile(MultipartFile file, String filename) {
+    public String uploadFile(MultipartFile file, String filename) {
         BlobClient blobClient  = this.containerClient.getBlobClient(filename);
         InputStream fileStream = null;
         try {
             fileStream = file.getInputStream();
         } catch (IOException ex) {
+            return "error";
+        }
+        if (file.getSize() > 10485760) {
+            return "too-large";
         }
         blobClient.upload(fileStream);
-        return true;
+        return "success";
     }
 }

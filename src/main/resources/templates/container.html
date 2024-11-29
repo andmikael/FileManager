@@ -3,6 +3,9 @@
 <header></header>
 <body>
 	<div class="form-container">
+		<div id="error-text" th:if="${message}">
+			<h2 th:text="${message}">
+		</div>
 		<h2 id = "welcome">Manage an existing container</h2>
 		<form id ="container-selector" method="POST" enctype="text/plain" th:action="@{/selectContainer}">
 			<div>

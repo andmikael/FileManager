@@ -8,8 +8,8 @@ import com.azure.storage.blob.models.BlobContainerItem;
 import com.azure.storage.blob.models.BlobItem;
 
 public interface BlobStorage {
-    void init();
-    public void setConnString(String connString);
+    Boolean init();
+    void setConnString(String connString) throws java.lang.IllegalArgumentException;
     PagedIterable<BlobContainerItem> fetchBlobContainers();
     PagedIterable<BlobContainerItem> getBlobContainers();
     BlobContainerClient getContainerClient(String containerName);
@@ -19,5 +19,5 @@ public interface BlobStorage {
     BlobContainerClient getCurrentContainerClient();
     PagedIterable<BlobItem> getBlobs();
     Boolean deleteContainer();
-    Boolean uploadFile(MultipartFile file, String filename);
+    String uploadFile(MultipartFile file, String filename);
 }

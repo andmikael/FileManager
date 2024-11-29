@@ -2,6 +2,9 @@
 	<link th:href = "@{/css/login.css}" rel="stylesheet">
 <body>
 	<div class ="login-container">
+		<div id="error-text" th:if="${message}">
+			<h2 th:text="${message}">
+		</div>
 		<h2>Type the connection string</h2>
 		<form id ="login-form" method="POST" enctype="text/plain" th:action="@{/loginContainer}">
 			<div>
