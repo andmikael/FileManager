@@ -48,14 +48,17 @@ public class FileController {
     public String handleFileUpload(@RequestBody MultipartFile file, Model model, RedirectAttributes redirectAttribs) {
         String result = blobStorage.uploadFile(file, file.getOriginalFilename());
         switch (result) {
-            case "error":
+            case "error" -> {
                 redirectAttribs.addFlashAttribute("message", "Encountered error while uploading");
                 return "redirect:/index";
-            case "too-large":
-                redirectAttribs.addFlashAttribute("message", "Filesize too large!");
+            }
+            case "too-large" -> {
+                redirectAttribs.addFlashAttribute("message", "Filesize exceeds 5MB.");
                 return "redirect:/index";
-            default:
+            }
+            default -> {
                 return "redirect:/index";
+            }
         }
     }
 

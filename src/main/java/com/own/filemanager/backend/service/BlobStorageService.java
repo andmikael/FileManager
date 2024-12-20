@@ -24,7 +24,6 @@ public class BlobStorageService implements BlobStorage {
 
     @Autowired
     public BlobStorageService(BlobProperties properties) {
-        //properties.setConnectionStr(connString);
         this.connectionString = properties.getConnectionStr();
         properties.setUrlPrefix();
         this.urlPrefix = properties.getUrlPrefix();
@@ -105,7 +104,7 @@ public class BlobStorageService implements BlobStorage {
         } catch (IOException ex) {
             return "error";
         }
-        if (file.getSize() > 10485760) {
+        if (file.getSize() > 5242880) {
             return "too-large";
         }
         blobClient.upload(fileStream);

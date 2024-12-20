@@ -13,13 +13,9 @@
 		<button type="submit" id="upload-button" name="upload-button">
 			Upload file
 		</button>
-        <!--<label for="upload-button" id="upload-label"></label>
-        <input id="upload-button" type="submit" value="Upload" />-->
-
-
       </div>
 		</form>
-		<h2 th:text="|${container}:|"></h2>
+		<h2 th:text="|files in ${container}:|"></h2>	
     <ul id="bloblist">
       <li th:each="blob:${blobs}" th:text="${blob.getName()}" th:value="${blob.getName()}"></li>
     </ul>
