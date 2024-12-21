@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.azure.core.http.rest.PagedIterable;
 import com.azure.storage.blob.models.BlobContainerItem;
@@ -29,8 +30,11 @@ public class ContainerController {
     }
 
     @GetMapping("/container")
-    public String populateDropDown(Model model){
-        this.blobStorage.init();
+    public String populateDropDown(Model model, RedirectAttributes redirectAttrs){
+        if (!this.blobStorage.init()) {
+            redirectAttrs.addFlashAttribute("message", "Wrong connection string!");
+            return "redirect:/";
+        }
         List<String> blobs = new ArrayList<>();
         PagedIterable<BlobContainerItem> foundBlobs = blobStorage.getBlobContainers();
         for (BlobContainerItem elem : foundBlobs) {
@@ -41,24 +45,33 @@ public class ContainerController {
     }
 
     @PostMapping(value="/selectContainer")
-    public String handleContainerSelection(@RequestBody String postBody, Model model) {
-        String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
-        String method = postBody.substring(postBody.indexOf("\n"), postBody.indexOf("=", postBody.indexOf("\n")));
-        method = method.trim().toLowerCase();
-        System.out.println(method);
-        if (method.equals("delete-button")) {
-            blobStorage.createContainer(containerName);
-            blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
-            if (blobStorage.deleteContainer()) {
-                System.out.println("deletion successful");
-                return "redirect:/";
+    public String handleContainerSelection(@RequestBody String postBody, Model model, RedirectAttributes redirectAttribs) {
+        if (postBody.contains("delete-button")) {
+            if (postBody.contains("container-name=")) {
+                String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
+                blobStorage.createContainer(containerName);
+                blobStorage.setContainerClient(blobStorage.getContainerClient(containerName));
+                if (blobStorage.deleteContainer()) {
+                    redirectAttribs.addFlashAttribute("message", "Container deleted");
+                    return "redirect:/container";
+                } else {
+                    redirectAttribs.addFlashAttribute("message", "Was unable to delete selected container");
+                    return "redirect:/container";
+                }
             } else {
-                System.out.println("deletion unsuccessful");
-                return "redirect:/Error";
+                redirectAttribs.addFlashAttribute("message", "No container selected");
+                return "redirect:/container";
             }
         }
-
-        blobStorage.createContainer(containerName); // createContainer method returns a handle to an existing container if it already exists
+        if (postBody.contains("select-button")) {
+            if (postBody.contains("container-name=")) {
+                String containerName = postBody.substring(15, postBody.indexOf("\n")-1);
+                blobStorage.createContainer(containerName); // createContainer method returns a handle to an existing container if it already exists
+            } else {
+                redirectAttribs.addFlashAttribute("message", "No container selected");
+                return "redirect:/container";
+            }
+        }
         return "redirect:/index";
     }
 
