@@ -1,5 +1,5 @@
 > [!NOTE]
-> A more polished version of Filemanager with Angular v19 frontend is developed and hosted [here](https://github.com/andmikael/FileManagerV2)
+> This repo is archived and migrated to the new version of Filemanager with Angular 19 [here](https://github.com/andmikael/FileManagerV2)
 
 # FileManager
 
